@@ -93,6 +93,12 @@ def run_psql(filename, table_name):
             if attribute.attrib.get("name") == "BIN":
                 bldg_bin = attribute[0].text
 
+        # Some files use 2.0 for some reason...
+        for attribute in building.iter("{http://www.opengis.net/citygml/generics/2.0}stringAttribute"):
+            if attribute.attrib.get("name") == "BIN":
+                bldg_bin = attribute[0].text
+
+        
         # Get the polygons for this building
         polys = [polygon_to_wkt(p) for p in building.iter(insert_namespace('Polygon', building))]
 
@@ -104,8 +110,11 @@ def run_psql(filename, table_name):
             sys.stderr.write( 'degenerate building geometry gml:id={}'.format(bldg_id))
 
 if __name__ == '__main__':
-    gml = sys.argv[1]
-    table_name = sys.argv[2]
-    sys.stderr.write("converting {}\n".format(gml))
-    run_psql(sys.argv[1], sys.argv[2])
+    table_name = sys.argv[1]
+    for x in xrange(1,20):
+        gml = "./data/DA_WISE_GMLs/DA" + str(x) + "_3D_Buildings_Merged.gml"
+        sys.stderr.write("converting {}\n".format(gml))
+        run_psql(gml, table_name)
+        pass
+    
 
