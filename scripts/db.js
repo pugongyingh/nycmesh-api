@@ -1,15 +1,6 @@
 
-
-exports.handler = function (event, context, callback) {
-    callback(null, {
-        statusCode: 200,
-        body: createReturn()
-    });
-}
-
-function createReturn() {
-    //return '{"msg": "Hello visitor from the outer space!"}'
-
+exports.handler = (event, context, callback) => {
+ 
     var pg = require('pg');
     //or native libpq bindings
    // var pg = require('pg').native
@@ -17,18 +8,40 @@ function createReturn() {
     //Can be found in the Details page
     var conString = "postgres://juicmaka:okUGxNKWk6CtRezIOHLBHxPbYiGMiQcS@arjuna.db.elephantsql.com:5432/juicmaka"
     var client = new pg.Client(conString);
-    client.connect(function (err) {
-        if (err) {
-            return `{"msg": "Current Time: 888"}`;
-        }
-        client.query('SELECT ip_address FROM log_visits', function (err, result) {
-            if (err) {
-                return `{"msg": "Current Time: 999"}`;
-            }
-            var output = JSON.stringify(result);
-            // >> output: 2018-08-23T14:02:57.117Z
-            client.end();
-            return  `{"msg": "Current Time: 444"}`;;
-        });
+
+
+
+
+  client.connect();
+  var query = client.query("SELECT ip_address FROM log_visits");
+  query.then(r => {
+    callback(null, {
+      statusCode: 200,
+      body: JSON.stringify(r.rows[0]),
     });
+  });
+  query.catch(r => console.log("HERE"));
+  //var connection = {
+    //host : 'testdb.cmzabivlkufu.us-east-2.rds.amazonaws.com',
+    //user : 'derek',
+    //password : 'Aa89snj12',
+    //database : 'testdb',
+  //};
+
+  //try {
+    //var client = new pg.Client(connection);
+    //client.connect();
+    //var query = await client.query("SELECT id FROM users;");
+
+    //query.then(r => console.log(r));
+    //query.catch(r => console.log(r));
+    //client.end();
+    //console.log("xs")
+  //}
+  //catch (err) {
+    //console.log("x", err)
+  //}
 }
+
+
+
