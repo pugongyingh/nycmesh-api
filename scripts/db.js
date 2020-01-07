@@ -19,16 +19,16 @@ function createReturn() {
     var client = new pg.Client(conString);
     client.connect(function (err) {
         if (err) {
-            return console.error('could not connect to postgres', err);
+            return `{"msg": "Current Time: 888"}`;
         }
         client.query('SELECT ip_address FROM log_visits', function (err, result) {
             if (err) {
-                return console.error('error running query', err);
+                return `{"msg": "Current Time: 999"}`;
             }
             var output = JSON.stringify(result);
             // >> output: 2018-08-23T14:02:57.117Z
             client.end();
-            return  output;
+            return  `{"msg": "Current Time: 444"}`;;
         });
     });
 }
