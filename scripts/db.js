@@ -36,7 +36,7 @@ exports.handler = function(event, context, callback) {
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Headers": "Content-Type"
       },
-      body: JSON.stringify({ visits: res.rows[0] }),
+      body: JSON.stringify({ visits: "res.rows[0]" }),
     });
   });
   
