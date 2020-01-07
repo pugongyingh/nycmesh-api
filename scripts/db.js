@@ -15,7 +15,7 @@ exports.handler = async (event) => {
     const res = await client.query('SELECT ip_address FROM log_visits')
 
     // { pk: '123' }
-    console.log(res.rows[0])
+    console.log(res.rows[3])
 
     await client.end()
 
