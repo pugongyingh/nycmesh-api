@@ -17,10 +17,10 @@ exports.handler = (event, context, callback) => {
   query.then(r => {
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify(r.rows[0]),
+      body: JSON.stringify(r),
     });
   });
-  query.catch(r => console.log("HERE"));
+ // query.catch(r => console.log("HERE"));
   //var connection = {
     //host : 'testdb.cmzabivlkufu.us-east-2.rds.amazonaws.com',
     //user : 'derek',
