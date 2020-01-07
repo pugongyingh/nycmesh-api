@@ -25,10 +25,10 @@ function createReturn() {
             if (err) {
                 return console.error('error running query', err);
             }
-            var output = JSON.stringify(result.rows[0]);
+            var output = JSON.stringify(result);
             // >> output: 2018-08-23T14:02:57.117Z
             client.end();
-            return `{"msg": "Current Time: ${ output }"}`;
+            return  output;
         });
     });
 }
