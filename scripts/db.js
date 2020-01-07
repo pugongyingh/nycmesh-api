@@ -1,41 +1,44 @@
-exports.handler = (event, context, callback) => {
-  var pg = require('pg');
-    var connection = {
-      host : 'arjuna.db.elephantsql.com',
-      port: 5432,
-      user : 'juicmaka',
-      password : 'okUGxNKWk6CtRezIOHLBHxPbYiGMiQcS',
-      database : 'juicmaka',
-    };
+const { Pool } = require('pg');
 
-  var client = new pg.Client(connection);
-  client.connect();
-  var query = client.query("SELECT ip_address FROM log_visits;");
-  query.then(r => {
+const con = new Pool({
+  connectionString: 	`postgres://juicmaka:okUGxNKWk6CtRezIOHLBHxPbYiGMiQcS@arjuna.db.elephantsql.com:5432/juicmaka`,
+  ssl: true,
+});
+
+const query = (sql, params) => con.connect()
+  .then(client => client.query(sql, params)
+    .then((res) => {
+      client.release();
+      return Promise.resolve(res);
+    })
+    .catch((err) => {
+      client.release();
+      return Promise.reject(err);
+    }));
+
+const insertVisits = async (event) => {
+  const sqlV = `SELECT ip_address FROM log_visits`;
+  return await query(sqlV);
+};
+
+exports.handler = function(event, context, callback) {
+  //console.log(event);
+  console.log('user-agent', event.headers['user-agent']);
+  console.log('x-forwarded-for', event.headers['x-forwarded-for']);
+  console.log(context);
+  //const {identity, user} = context.clientContext;
+  insertVisits(event)
+  .then(res => {
+    console.log(res.rows[0]);
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify(r.rows[0]),
+      headers: {
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Headers": "Content-Type"
+      },
+      body: JSON.stringify({ visits: res.rows[0] }),
     });
   });
-  query.catch(r => console.log("HERE"));
-  //var connection = {
-    //host : 'testdb.cmzabivlkufu.us-east-2.rds.amazonaws.com',
-    //user : 'derek',
-    //password : 'Aa89snj12',
-    //database : 'testdb',
-  //};
+  
 
-  //try {
-    //var client = new pg.Client(connection);
-    //client.connect();
-    //var query = await client.query("SELECT id FROM users;");
-
-    //query.then(r => console.log(r));
-    //query.catch(r => console.log(r));
-    //client.end();
-    //console.log("xs")
-  //}
-  //catch (err) {
-    //console.log("x", err)
-  //}
 }
