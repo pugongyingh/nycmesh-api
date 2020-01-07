@@ -14,9 +14,9 @@ exports.handler = function (event, context, callback) {
 function createReturn() {
     //return '{"msg": "Hello visitor from the outer space!"}'
 
-    //var pg = require('pg');
+    var pg = require('pg');
     //or native libpq bindings
-    var pg = require('pg').native
+   // var pg = require('pg').native
 
     //Can be found in the Details page
     var conString = "postgres://juicmaka:okUGxNKWk6CtRezIOHLBHxPbYiGMiQcS@arjuna.db.elephantsql.com:5432/juicmaka"
