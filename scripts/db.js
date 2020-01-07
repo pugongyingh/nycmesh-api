@@ -32,10 +32,6 @@ exports.handler = function(event, context, callback) {
     console.log(res.rows[0]);
     callback(null, {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Headers": "Content-Type"
-      },
       body: JSON.stringify({ visits: "res.rows[0]" }),
     });
   });
