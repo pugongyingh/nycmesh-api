@@ -17,7 +17,7 @@ exports.handler = (event, context, callback) => {
   query.then(r => {
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify(r),
+      body: "888",
     });
   });
  // query.catch(r => console.log("HERE"));
