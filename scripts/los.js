@@ -13,7 +13,10 @@ exports.handler = function(event, context, callback) {
 var client = new pg.Client(conString);
 client.connect(function(err) {
   if(err) {
-    return console.error('could not connect to postgres', err);
+   response ={
+        statusCode: 200,
+        body: "999888",
+    };
   }
   client.query('SELECT  * FROM  behaviour_sample8', function(err, result) {
     if(err) {
@@ -22,11 +25,13 @@ client.connect(function(err) {
         body: "noo",
     };
     }
-    
-           response = {
+    else {
+                                response = {
         statusCode: 200,
         body: JSON.stringify(result.rows[0]),
     };
+                    }
+
    //console.log(result.rows[0].theTime);
     // >> output: 2018-08-23T14:02:57.117Z
     client.end();
