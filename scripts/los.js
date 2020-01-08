@@ -1,95 +1,39 @@
-const fetch = require("node-fetch");
-require("dotenv").config();
-const { performQuery } = require("./db");
-const ProgressBar = require("./ProgressBar");
+ var pg = require('pg');
+var conString =  'postgres://juicmaka:okUGxNKWk6CtRezIOHLBHxPbYiGMiQcS@arjuna.db.elephantsql.com:5432/juicmaka'
+exports.handler = function(event, context, callback) {
 
-checkLOS().then(() => process.exit(0));
 
-let bar;
-let processed = 0;
-let notFound = 0;
-let total = 0;
+//or native libpq bindings
+//var pg = require('pg').native
+  const response ={
+        statusCode: 200,
+        body: "999",
+    };
 
-async function checkLOS() {
-	const requests = await getRequests();
-	bar = new ProgressBar(requests.length);
-	bar.render();
-
-	for (var i = 0; i < requests.length; i++) {
-		const request = requests[i];
-		await handleRequest(request);
-		bar.curr = ++total;
-		bar.render();
-	}
-
-	console.log("\n");
-	console.log(`${processed} buildings processed`);
-	console.log(`${notFound} buildings not found`);
-}
-
-async function handleRequest(request) {
-	let skip = false;
-	if (!request.bin) skip = true;
-	if (!request.roof_access) skip = true;
-	if (request.bin < 0 || request.bin % 1000000 === 0) skip = true;
-	if (
-		request.device_types.filter(
-			device_type =>
-				device_type &&
-				["Omni", "LBE120", "SN1Sector1", "SN1Sector2"].indexOf(
-					device_type.name
-				) > -1
-		).length
-	)
-		skip = true;
-	if ([3946, 1932, 1933].indexOf(request.id) > -1) skip = true;
-	if (skip) {
-		processed++;
-		return;
-	}
-
-	const url = `http://localhost:9000/v1/los?bin=${request.bin}`;
-	const losResponse = await fetch(url);
-	const {
-		visibleOmnis,
-		visibleSectors,
-		visibleRequests,
-		error
-	} = await losResponse.json();
-	if (error) {
-		if (error === "Not found") {
-			notFound++;
-			return;
-		}
-		throw Error(error);
-	} else {
-		processed++;
-	}
-}
-
-async function getRequests() {
-	return performQuery(
-		`SELECT
-	requests.*,
-	buildings.bin,
-	buildings.lat,
-	buildings.lng,
-	buildings.alt,
-	json_agg(json_build_object('id', panoramas.id, 'url', panoramas.url, 'date', panoramas.date)) AS panoramas,
-	json_agg(device_types.*) AS device_types
-FROM
-	requests
-	LEFT JOIN buildings ON requests.building_id = buildings.id
-	LEFT JOIN panoramas ON requests.id = panoramas.request_id
-	LEFT JOIN nodes ON nodes.building_id = buildings.id
-	LEFT JOIN devices ON devices.node_id = nodes.id
-	LEFT JOIN device_types ON devices.device_type_id = device_types.id
-WHERE
-	requests.status = 'open'
-GROUP BY
-	requests.id,
-	buildings.id
-ORDER BY
-	requests.id`
-	);
+var client = new pg.Client(conString);
+client.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+  client.query('SELECT  * FROM  behaviour_sample8', function(err, result) {
+    if(err) {
+        response = {
+        statusCode: 200,
+        body: "noo",
+    };
+    }
+    
+           response = {
+        statusCode: 200,
+        body: JSON.stringify(result.rows[0]),
+    };
+   //console.log(result.rows[0].theTime);
+    // >> output: 2018-08-23T14:02:57.117Z
+    client.end();
+  });
+});
+ 
+ 
+ 
+ return response;
 }
