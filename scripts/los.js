@@ -16,14 +16,12 @@ exports.handler = async (event) => {
     //console.log(res.rows[2])
 
     await client.end();
-    var n = "888";
+    var n = "no";
      
  
      if (rows.length) {
                if (rows[0].xym == 12345678) {
                     n = "ok"
-                } else {
-                    n = "err"
                 }
 
     }
