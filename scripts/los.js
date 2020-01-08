@@ -15,23 +15,11 @@ exports.handler = async (event) => {
     // { pk: '123' }
     //console.log(res.rows[2])
 
-    await client.end()
-    var n = JSON.stringify(res.rows);
-     if (n!=[]) {
-               if (res.rows[0].xym == 12345678) {
-                    n = "ok"
-                } else {
-                    n = "err"
-                }
-
-    }
+    await client.end();
+    var n = json(res, 200);
+    
 
 
-    const response = {
-        statusCode: 200,
-        body: n
-    };
-
-    return response;
+    return n;
 
 }
