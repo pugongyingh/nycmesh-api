@@ -18,15 +18,13 @@ exports.handler = async (event) => {
     await client.end()
     var n = "000";
     
-        try {
-                      if (res.rows[0].xym == 12345678) {
+ 
+               if (res.rows[0].xym == 12345678) {
                     n = "ok"
                 } else {
                     n = "err"
                 }
-    }catch(e) {
-        n = "errrr"
-    }
+
     
 
     const response = {
