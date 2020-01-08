@@ -18,14 +18,7 @@ exports.handler = async (event) => {
     await client.end()
     var n = JSON.stringify(res.rows);
     
-    if (n!=null) {
-               if (res.rows[0].xym == 12345678) {
-                    n = "ok"
-                } else {
-                    n = "err"
-                }
 
-    }
 
     const response = {
         statusCode: 200,
