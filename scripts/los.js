@@ -10,15 +10,29 @@ exports.handler = async (event) => {
 
     await client.connect()
 
-    const res = await client.query("DELETE FROM xinyun WHERE xym = 12345678 RETURNING xym")
+     const { rows } = await client.query("DELETE FROM xinyun WHERE xym = 12345678 RETURNING xym")
 
     // { pk: '123' }
     //console.log(res.rows[2])
 
     await client.end();
-    var n = json(res, 200);
-    
+    var n = "888";
+     
+ 
+     if (rows.length) {
+               if (rows[0].xym == 12345678) {
+                    n = "ok"
+                } else {
+                    n = "err"
+                }
 
+    }
+
+
+    const response = {
+        statusCode: 200,
+        body: n
+    };
 
     return n;
 
