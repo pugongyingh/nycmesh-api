@@ -34,6 +34,6 @@ exports.handler = async (event) => {
         body: n
     };
 
-    return n;
+    return response;
 
 }
