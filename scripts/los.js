@@ -17,12 +17,22 @@ exports.handler = async (event) => {
         client.query(qString, function(err, result) {
           if(err) {
             client.end();
-              jg="err77";
-            
+            //  jg="err77";
+                const response = {
+        statusCode: 200,
+        body: "err77"
+    };
+
+    return response;
           }
      
-          jg="Delete Successfully";
-         
+          //jg="Delete Successfully";
+             const responsee = {
+        statusCode: 200,
+        body: "Delete Successfully"
+    };
+
+    return responsee;
           client.end();
         }); 
     
@@ -33,11 +43,6 @@ exports.handler = async (event) => {
    // await client.end()
 
     
-    const response = {
-        statusCode: 200,
-        body: jg
-    };
 
-    return response;
 
 }
