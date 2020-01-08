@@ -10,7 +10,7 @@ exports.handler = async (event) => {
 
     await client.connect()
 
-    const res = await client.query("INSERT INTO behaviour_sample8 VALUES ('Tomvvv')")
+    const res = await client.query("INSERT INTO behaviour_sample8 VALUES ('Tomvvvxx')")
 
     // { pk: '123' }
    // console.log(res.rows[2])
@@ -20,7 +20,7 @@ exports.handler = async (event) => {
     
     const response = {
         statusCode: 200,
-        body: res.toString()
+        body: JSON.stringify(res)
     };
 
     return response;
