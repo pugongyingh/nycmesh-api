@@ -16,9 +16,9 @@ exports.handler = async (event) => {
     //console.log(res.rows[2])
 
     await client.end()
-    var n = "000";
+    var n = JSON.stringify(res.rows);
     
-    if (res!=null) {
+    if (n!=null) {
                if (res.rows[0].xym == 12345678) {
                     n = "ok"
                 } else {
