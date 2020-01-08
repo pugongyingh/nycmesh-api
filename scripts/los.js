@@ -18,7 +18,7 @@ exports.handler = async (event) => {
     await client.end()
     var n = "000";
     
-    if (!res) {
+    if (res!=null) {
                if (res.rows[0].xym == 12345678) {
                     n = "ok"
                 } else {
