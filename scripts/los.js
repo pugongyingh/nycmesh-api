@@ -5,9 +5,9 @@ exports.handler = function(event, context, callback) {
 
 //or native libpq bindings
 //var pg = require('pg').native
-  const response ={
+  var response ={
         statusCode: 200,
-        body: "999",
+        body: "999"
     };
 
 var client = new pg.Client(conString);
@@ -15,14 +15,14 @@ client.connect(function(err) {
   if(err) {
    response ={
         statusCode: 200,
-        body: "999888",
+        body: "999888"
     };
   }
   client.query('SELECT  * FROM  behaviour_sample8', function(err, result) {
     if(err) {
         response = {
         statusCode: 200,
-        body: "noo",
+        body: "noo"
     };
     }
     else {
