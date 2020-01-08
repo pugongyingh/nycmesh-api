@@ -10,7 +10,7 @@ exports.handler = async (event) => {
 
     await client.connect()
 
-    const res = await client.query('SELECT  * FROM  behaviour_sample8')
+    const res = await client.query('INSERT INTO behaviour_sample8 VALUES ("Tommmm")')
 
     // { pk: '123' }
     console.log(res.rows[2])
