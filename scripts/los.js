@@ -11,7 +11,7 @@ exports.handler = async (event) => {
     }
     
     
-    const connectionString = '	postgres://fpzwzphf:a2Eq8faak-xgWRBH4GD8anvuP8fXK1Zj@arjuna.db.elephantsql.com:5432/fpzwzphf'
+    const connectionString = 'postgres://fpzwzphf:a2Eq8faak-xgWRBH4GD8anvuP8fXK1Zj@arjuna.db.elephantsql.com:5432/fpzwzphf'
 
     const client = new Client({
         connectionString: connectionString
