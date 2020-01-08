@@ -10,7 +10,7 @@ exports.handler = async (event) => {
 
     await client.connect()
 
-    const res = await client.query('DELETE FROM behaviour_sample8 WHERE notes = 'Tom' RETURNING notes')
+    const res = await client.query("DELETE FROM behaviour_sample8 WHERE notes = 'Tom' RETURNING notes")
 
     // { pk: '123' }
     //console.log(res.rows[2])
@@ -19,7 +19,7 @@ exports.handler = async (event) => {
 
     const response = {
         statusCode: 200,
-        body: res,
+        body: res.toString(),
     };
 
     return response;
