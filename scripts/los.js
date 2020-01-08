@@ -26,10 +26,10 @@ client.connect(function(err) {
     };
     }
     else {
-                                response = {
+      response = {
         statusCode: 200,
-        body: JSON.stringify(result.rows[0]),
-    };
+        body: result.rows[0].toString()
+    }
                     }
 
    //console.log(result.rows[0].theTime);
