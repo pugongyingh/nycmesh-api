@@ -1,7 +1,7 @@
  var pg = require('pg');
 var conString =  'postgres://juicmaka:okUGxNKWk6CtRezIOHLBHxPbYiGMiQcS@arjuna.db.elephantsql.com:5432/juicmaka'
-exports.handler = function(event, context, callback) {
-
+//exports.handler = function(event, context, callback) {
+exports.handler = async (event) => {
 
 //or native libpq bindings
 //var pg = require('pg').native
