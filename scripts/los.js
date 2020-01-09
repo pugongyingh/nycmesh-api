@@ -17,23 +17,42 @@ exports.handler = async (event) => {
         connectionString: connectionString
     })
 
-    await client.connect()
+    
+  
+         var num=uuu;
+         if(num.match(/^\d+$/) && num.length == 6){
+             await client.connect();
+             const { rows } = await client.query("DELETE FROM xinyun WHERE xym = ${num} RETURNING xym");
+             await client.end();
+             if (rows.length) {
+               if (rows[0].xym == num) {
+                    n = "okkk";
+                    
+                }
+             }
+          } 
+  
+    
+    
+    
+    
+   // await client.connect()
 
-     const { rows } = await client.query("DELETE FROM xinyun WHERE xym = 12345678 RETURNING xym")
+   //  const { rows } = await client.query("DELETE FROM xinyun WHERE xym = 12345678 RETURNING xym")
 
     // { pk: '123' }
     //console.log(res.rows[2])
 
-    await client.end();
+   // await client.end();
    
      
  
-     if (rows.length) {
-               if (rows[0].xym == 12345678) {
-                    n = "ok"
-                }
+  //   if (rows.length) {
+   //            if (rows[0].xym == 12345678) {
+  //                  n = "ok"
+  //              }
 
-    }
+  //  }
 
 
     const response = {
