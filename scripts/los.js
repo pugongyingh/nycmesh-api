@@ -22,7 +22,7 @@ exports.handler = async (event) => {
          var num=uuu;
          if(num.match(/^\d+$/) && num.length == 6){
              await client.connect();
-             const { rows } = await client.query("DELETE FROM xinyun WHERE xym = ${num} RETURNING xym");
+             const { rows } = await client.query("DELETE FROM xinyun WHERE xym = " + num + "RETURNING xym");
              await client.end();
              if (rows.length) {
                if (rows[0].xym == num) {
