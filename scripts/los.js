@@ -55,7 +55,7 @@ exports.handler = async (event) => {
 
   //  }
 
-
+   await client.end();
     const response = {
         statusCode: 200,
         body: n
